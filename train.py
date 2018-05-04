@@ -1,3 +1,4 @@
+#!/Users/gowthamkannan/anaconda3/bin/python
 from __future__ import print_function
 from keras.layers import Input,Dropout,Flatten, Dense,Activation
 from keras.models import Model
@@ -9,7 +10,8 @@ from utils import *
 
 import time
 
-DATASET='citeseer'
+DATASET='cora'
+path='Data/cora'
 FILTER='chebyshev'
 MAX_DEGREE=2
 SYM_NORM=True
@@ -18,6 +20,7 @@ NUM_CLASSES=7
 
 X,A,y=load_data(dataset=DATASET)
 idx_train,idx_val,idx_test,y_train,y_val,y_test,train_mask=get_splits(y)
+# print(y_train.shape)
 
 X/=X.sum(1).reshape(-1,1)
 
@@ -53,6 +56,7 @@ dense_layer=Dense(NUM_CLASSES)(dropout_layer)
 Y=Activation('softmax')(dense_layer)
 #Compiling the model
 model=Model(inputs=[X_input]+G,outputs=Y)
+print(model.summary())
 best_val_loss=1.0
 VALIDATION_ACC=[]
 TRAINING_ACC=[]
@@ -97,6 +101,6 @@ plt.plot(VALDIATION_LOSS, color="b", label="Validation")
 plt.legend(loc="best")
 plt.tight_layout()
 # plt.show()
-plt.savefig('plot_1.png')
+plt.savefig('plot_2.png')
 
 
